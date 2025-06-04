@@ -1,40 +1,48 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: [
-		"./pages/**/*.{js,ts,jsx,tsx,mdx}",
-		"./components/**/*.{js,ts,jsx,tsx,mdx}",
-		"./app/**/*.{js,ts,jsx,tsx,mdx}",
-	],
-	theme: {
-		extend: {
-			backgroundImage: {
-				"album-cover": "url('/panic-panini-album.jpg')",
-				"incoming-shows": "url('/coming-shows-bg.jpg')",
-				"hero-pattern": "url('/pattern.png')",
-			},
-			fontFamily: {
-				permanentMarker: ["Permanent Marker", "sans-serif"],
-				poppins: ["Poppins", "sans-serif"],
-				rockSalt: ["Rock Salt", "sans-serif"],
-			},
-			colors: {
-				"fluo-green": "#43ffb6",
-				"yellow-btn-primary": "#ffc621",
-				"medium-gray": "#bebebe",
-			},
-			boxShadow: {
-				"centered-shadow": "0px 0px 19px 4px rgba(0,0,0,0.1)",
-			},
-			keyframes: {
-				slideUp: {
-					"0%": { transform: "translateY(80px)" },
-					"100%": { transform: "translateY(0px)" },
-				},
-			},
-			animation: {
-				slideUp: "slideUp ease .3s forwards 1.2s",
-			},
-		},
-	},
-	plugins: [],
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        display: ['Montserrat', 'sans-serif'],
+      },
+      colors: {
+        primary: '#1DB954', // Spotify green
+        secondary: '#191414', // Spotify black
+        accent: '#1ED760', // Spotify light green
+        dark: '#121212',
+        light: '#FFFFFF',
+        gray: {
+          100: '#f7fafc',
+          200: '#edf2f7',
+          300: '#e2e8f0',
+          400: '#cbd5e0',
+          500: '#a0aec0',
+          600: '#718096',
+          700: '#4a5568',
+          800: '#2d3748',
+          900: '#1a202c',
+        },
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'slide-up': 'slideUp 0.5s ease-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+      },
+    },
+  },
+  plugins: [],
 };
