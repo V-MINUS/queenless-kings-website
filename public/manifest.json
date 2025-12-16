@@ -1,0 +1,27 @@
+{
+  "name": "Queen Less Kings",
+  "short_name": "QLK",
+  "description": "Official website of Queen Less Kings - Experience our music, upcoming events, and exclusive content.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#00ff88",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["music", "entertainment"],
+  "lang": "en",
+  "dir": "ltr"
+}
