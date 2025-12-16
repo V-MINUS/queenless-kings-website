@@ -1,6 +1,11 @@
 import type { NextConfig } from 'next'
 
 const config: NextConfig = {
+  // Set turbopack root to this project directory
+  turbopack: {
+    root: __dirname,
+  },
+
   // Image optimization
   images: {
     remotePatterns: [
