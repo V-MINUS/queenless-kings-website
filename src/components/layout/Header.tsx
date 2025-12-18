@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Moon, Sun } from 'lucide-react'
-import { useTheme } from 'next-themes'
+import { Menu, X } from 'lucide-react'
 
 const navigation = [
   { name: 'Home', href: '#hero' },
@@ -18,7 +17,6 @@ const navigation = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const { theme, setTheme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,38 +63,10 @@ export default function Header() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-crimson group-hover:w-full transition-all duration-300"></span>
               </a>
             ))}
-            
-            {/* Theme Toggle */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-full bg-brand-charcoal hover:bg-brand-darkred/30 border border-brand-crimson/30 transition-colors duration-200"
-            >
-              {theme === 'dark' ? (
-                <Sun className="h-5 w-5 text-brand-crimson" />
-              ) : (
-                <Moon className="h-5 w-5 text-brand-crimson" />
-              )}
-            </motion.button>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-4">
-            {/* Mobile Theme Toggle */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded-full bg-brand-charcoal hover:bg-brand-darkred/30 border border-brand-crimson/30 transition-colors duration-200"
-            >
-              {theme === 'dark' ? (
-                <Sun className="h-5 w-5 text-brand-crimson" />
-              ) : (
-                <Moon className="h-5 w-5 text-brand-crimson" />
-              )}
-            </motion.button>
-
+          <div className="md:hidden flex items-center">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}

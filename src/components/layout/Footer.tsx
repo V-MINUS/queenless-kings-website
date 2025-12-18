@@ -125,7 +125,7 @@ export default function Footer() {
               <div className="space-y-3 mb-6">
                 <div className="flex items-center space-x-3 text-brand-cream/60">
                   <Mail className="h-4 w-4 text-brand-crimson" />
-                  <span className="text-sm">info@queenlesskings.com</span>
+                  <span className="text-sm">queenlesskingsofficial@gmail.com</span>
                 </div>
                 <div className="flex items-center space-x-3 text-brand-cream/60">
                   <MapPin className="h-4 w-4 text-brand-crimson" />

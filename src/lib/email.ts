@@ -34,7 +34,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<boolean> 
     }
     
     const fromEmail = process.env.EMAIL_FROM || 'Queen Less Kings <noreply@queenlesskings.com>'
-    const toEmail = process.env.EMAIL_TO || 'info@queenlesskings.com'
+    const toEmail = process.env.EMAIL_TO || 'queenlesskingsofficial@gmail.com'
 
     await resend.emails.send({
       from: fromEmail,
