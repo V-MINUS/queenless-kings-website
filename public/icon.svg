@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#0a0a0a"/>
+  <g transform="translate(56, 100)">
+    <!-- Crown base -->
+    <path d="M0 280 L40 120 L100 200 L200 80 L300 200 L360 120 L400 280 Z" 
+          fill="#c41e3a" stroke="#8b0000" stroke-width="8"/>
+    <!-- Crown band -->
+    <rect x="20" y="280" width="360" height="50" rx="8" fill="#c41e3a" stroke="#8b0000" stroke-width="6"/>
+    <!-- Crown jewels -->
+    <circle cx="200" cy="140" r="25" fill="#f5f0e1"/>
+    <circle cx="100" cy="180" r="18" fill="#f5f0e1"/>
+    <circle cx="300" cy="180" r="18" fill="#f5f0e1"/>
+    <!-- Crown top ornaments -->
+    <circle cx="40" cy="120" r="15" fill="#8b0000"/>
+    <circle cx="200" cy="80" r="20" fill="#8b0000"/>
+    <circle cx="360" cy="120" r="15" fill="#8b0000"/>
+  </g>
+</svg>

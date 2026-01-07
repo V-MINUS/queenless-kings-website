@@ -97,9 +97,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://api.spotify.com" />
         {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/favicon.jpg" type="image/jpeg" />
+        <link rel="apple-touch-icon" href="/favicon.jpg" />
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className="font-sans antialiased bg-background-primary text-white min-h-screen">

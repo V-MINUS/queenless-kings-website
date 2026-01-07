@@ -140,6 +140,30 @@ export default function Music() {
           ))}
         </div>
 
+        {/* Spotify Embed - Latest Single */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="mt-16 max-w-2xl mx-auto"
+        >
+          <h3 className="text-lg font-semibold text-brand-cream/60 mb-6 uppercase tracking-wider text-center">Listen Now</h3>
+          <div className="rounded-xl overflow-hidden border border-brand-crimson/30">
+            <iframe 
+              style={{ borderRadius: '12px' }}
+              src="https://open.spotify.com/embed/album/03OpQZiz2UuPY1yvcOTGBr?utm_source=generator&theme=0"
+              width="100%" 
+              height="352" 
+              frameBorder="0" 
+              allowFullScreen
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+              loading="lazy"
+              title="When You're On My Mind - Queenless Kings on Spotify"
+            />
+          </div>
+        </motion.div>
+
         {/* Streaming Platforms */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -47,7 +47,7 @@ export default function Header() {
               className="text-xl font-bold text-brand-cream uppercase tracking-wider"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              Queen Less Kings
+              Queenless Kings
             </motion.div>
           </Link>
 
