@@ -39,8 +39,8 @@ export default function About() {
           >
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden border border-brand-crimson/30">
               <img 
-                src="/media/queenlesskingsmusic_1731090435_3496962489134188358_19327151472.webp" 
-                alt="Queenless Kings band photo"
+                src="/media/band-photo-2025.jpg" 
+                alt="Queenless Kings band photo - Copyright Abigail Ring"
                 className="absolute inset-0 w-full h-full object-cover"
               />
               

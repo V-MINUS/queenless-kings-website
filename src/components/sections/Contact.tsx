@@ -8,8 +8,8 @@ const contactInfo = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'queenlesskingsofficial@gmail.com',
-    href: 'mailto:queenlesskingsofficial@gmail.com',
+    value: 'bookings@queenlesskingsband.com',
+    href: 'mailto:bookings@queenlesskingsband.com',
   },
   {
     icon: Phone,
