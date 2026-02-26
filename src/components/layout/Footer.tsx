@@ -148,12 +148,12 @@ export default function Footer() {
             © 2025 Queenless Kings. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 sm:mt-0">
-            <a href="#" className="text-brand-cream/50 hover:text-brand-crimson text-sm transition-colors duration-200">
+            <Link href="/privacy" className="text-brand-cream/50 hover:text-brand-crimson text-sm transition-colors duration-200">
               Privacy Policy
-            </a>
-            <a href="#" className="text-brand-cream/50 hover:text-brand-crimson text-sm transition-colors duration-200">
+            </Link>
+            <Link href="/terms" className="text-brand-cream/50 hover:text-brand-crimson text-sm transition-colors duration-200">
               Terms of Service
-            </a>
+            </Link>
           </div>
         </motion.div>
       </div>

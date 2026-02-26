@@ -12,6 +12,11 @@ export interface CalendarEvent {
   end: string
   htmlLink?: string
   status?: string
+  venue?: string
+  city?: string
+  isAllDay?: boolean
+  ticketUrl?: string
+  price?: string
 }
 
 // Initialize Google Auth
@@ -54,16 +59,18 @@ export async function getUpcomingEvents(maxResults = 10): Promise<CalendarEvent[
       orderBy: 'startTime',
     })
 
-    return (response.data.items || []).map((event) => ({
-      id: event.id || '',
-      title: event.summary || 'Untitled Event',
-      description: event.description || undefined,
-      location: event.location || undefined,
-      start: event.start?.dateTime || event.start?.date || '',
-      end: event.end?.dateTime || event.end?.date || '',
-      htmlLink: event.htmlLink || undefined,
-      status: event.status || undefined,
-    }))
+    return (response.data.items || [])
+      .map((event) => ({
+        id: event.id || '',
+        title: event.summary || 'Untitled Event',
+        description: event.description || undefined,
+        location: event.location || undefined,
+        start: event.start?.dateTime || event.start?.date || '',
+        end: event.end?.dateTime || event.end?.date || '',
+        htmlLink: event.htmlLink || undefined,
+        status: event.status || undefined,
+      }))
+      .map(mapEvent)
   } catch (error) {
     console.error('Error fetching calendar events:', error)
     return []
@@ -121,7 +128,7 @@ export async function getEventById(eventId: string): Promise<CalendarEvent | nul
     })
 
     const event = response.data
-    return {
+    return mapEvent({
       id: event.id || '',
       title: event.summary || 'Untitled Event',
       description: event.description || undefined,
@@ -130,7 +137,7 @@ export async function getEventById(eventId: string): Promise<CalendarEvent | nul
       end: event.end?.dateTime || event.end?.date || '',
       htmlLink: event.htmlLink || undefined,
       status: event.status || undefined,
-    }
+    })
   } catch (error) {
     console.error('Error fetching calendar event:', error)
     return null
@@ -175,4 +182,16 @@ export function formatEventTime(dateString: string): string {
 export function isAllDayEvent(start: string): boolean {
   // All-day events have date format (YYYY-MM-DD) instead of datetime
   return start.length === 10
+}
+
+export function mapEvent(event: CalendarEvent): CalendarEvent {
+  const { venue, city } = parseLocation(event.location)
+  return {
+    ...event,
+    venue: venue || event.venue,
+    city: city || event.city,
+    isAllDay: isAllDayEvent(event.start),
+    ticketUrl: event.description?.match(/https?:\/\/\S+/)?.[0] || event.ticketUrl,
+    price: event.description?.match(/€\s?\d+/)?.[0] || event.price,
+  }
 }
