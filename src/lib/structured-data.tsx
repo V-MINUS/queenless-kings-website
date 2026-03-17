@@ -35,7 +35,7 @@ export function getBandSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'MusicGroup',
-    name: 'Queen Less Kings',
+    name: 'Queenless Kings',
     url: baseUrl,
     logo: `${baseUrl}/logo.png`,
     image: `${baseUrl}/og-image.jpg`,
@@ -47,6 +47,7 @@ export function getBandSchema() {
       process.env.NEXT_PUBLIC_YOUTUBE || '',
       process.env.NEXT_PUBLIC_FACEBOOK || '',
       process.env.NEXT_PUBLIC_TWITTER || '',
+      process.env.NEXT_PUBLIC_TIKTOK || '',
     ].filter(Boolean),
   }
 }
@@ -56,7 +57,7 @@ export function getWebsiteSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'Queen Less Kings',
+    name: 'Queenless Kings',
     url: baseUrl,
     description: 'Official website of Queen Less Kings - Rock band',
     potentialAction: {
@@ -115,6 +116,32 @@ export function getMusicAlbumSchema(album: MusicAlbumStructuredData) {
     image: album.image,
     numTracks: album.numTracks,
     genre: album.genre,
+  }
+}
+
+// Music Recording Schema (for singles/tracks)
+export function getMusicRecordingSchema(recording: {
+  name: string
+  artist: string
+  datePublished: string
+  duration?: string
+  url?: string
+  image?: string
+  genre?: string[]
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'MusicRecording',
+    name: recording.name,
+    byArtist: {
+      '@type': 'MusicGroup',
+      name: recording.artist,
+    },
+    datePublished: recording.datePublished,
+    duration: recording.duration,
+    url: recording.url,
+    image: recording.image,
+    genre: recording.genre,
   }
 }
 

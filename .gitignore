@@ -25,12 +25,23 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env*
+!.env.example
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 .env.development
 .env.production
+
+# Credentials and sensitive files
+*.key
+*.pem
+*.p12
+*.pfx
+*.json.secret
+*-credentials.json
+setup-redis-homelab.sh
 
 # vercel
 .vercel

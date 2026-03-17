@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Play, Pause, ExternalLink, Download } from 'lucide-react'
 import { useState } from 'react'
+import { JsonLd, getMusicRecordingSchema } from '@/lib/structured-data'
 
 const releases = [
   {
@@ -38,6 +39,21 @@ export default function Music() {
 
   return (
     <section id="music" className="relative py-20 bg-brand-charcoal overflow-hidden">
+      {/* Structured Data for Music Releases */}
+      {releases.map((release) => (
+        <JsonLd
+          key={`schema-${release.id}`}
+          data={getMusicRecordingSchema({
+            name: release.title,
+            artist: 'Queenless Kings',
+            datePublished: release.year,
+            duration: `PT${release.duration.replace(':', 'M')}S`,
+            url: release.spotifyUrl,
+            image: release.cover,
+            genre: ['Rock', 'Alternative Rock', 'Hard Rock'],
+          })}
+        />
+      ))}
       {/* Background effects */}
       <div className="absolute inset-0 circuit-pattern opacity-10" />
       

@@ -29,8 +29,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<boolean> 
   try {
     const resend = getResend()
     if (!resend) {
-      console.log('Email would be sent:', data)
-      return true // Return true in dev mode without API key
+      return false
     }
     
     const fromEmail = process.env.EMAIL_FROM || 'Queen Less Kings <noreply@queenlesskings.com>'

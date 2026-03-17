@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState, useCallback } from 'react'
+import Turnstile from 'react-turnstile'
 import { Mail, Phone, MapPin, Send, Instagram, Youtube, Music, Facebook, Video, Loader2, CheckCircle, AlertCircle } from 'lucide-react'
 
 const contactInfo = [
@@ -14,8 +15,8 @@ const contactInfo = [
   {
     icon: Phone,
     label: 'Booking',
-    value: '+44 20 1234 5678',
-    href: 'tel:+442012345678',
+    value: '+353 83 402 7166',
+    href: 'tel:00353834027166',
   },
   {
     icon: MapPin,
@@ -44,9 +45,23 @@ export default function Contact() {
   })
   const [status, setStatus] = useState<FormStatus>('idle')
   const [errorMessage, setErrorMessage] = useState('')
+  const [honeypot, setHoneypot] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!turnstileSiteKey) {
+      setStatus('error')
+      setErrorMessage('Verification temporarily unavailable. Please try again later.')
+      return
+    }
+    if (!turnstileToken) {
+      setStatus('error')
+      setErrorMessage('Please complete the verification challenge.')
+      return
+    }
+
     setStatus('loading')
     setErrorMessage('')
 
@@ -56,7 +71,11 @@ export default function Contact() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          honeypot,
+          turnstileToken,
+        }),
       })
 
       const data = await response.json()
@@ -67,6 +86,8 @@ export default function Contact() {
 
       setStatus('success')
       setFormData({ name: '', email: '', subject: '', message: '' })
+      setHoneypot('')
+      setTurnstileToken(null)
       
       // Reset success status after 5 seconds
       setTimeout(() => setStatus('idle'), 5000)
@@ -74,7 +95,7 @@ export default function Contact() {
       setStatus('error')
       setErrorMessage(error instanceof Error ? error.message : 'An error occurred')
     }
-  }, [formData])
+  }, [formData, honeypot, turnstileSiteKey, turnstileToken])
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -120,6 +141,19 @@ export default function Contact() {
             <h3 className="text-xl font-bold text-brand-cream mb-6 uppercase tracking-wider">Send us a message</h3>
             
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Honeypot field */}
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="website">Website</label>
+                <input
+                  id="website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(event) => setHoneypot(event.target.value)}
+                />
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-semibold text-brand-cream/70 mb-2 uppercase tracking-wider">
@@ -190,6 +224,22 @@ export default function Contact() {
                   placeholder="Tell us about your project or inquiry..."
                 />
               </div>
+
+              {turnstileSiteKey && (
+                <div className="flex justify-center">
+                  <Turnstile
+                    sitekey={turnstileSiteKey}
+                    onVerify={(token) => setTurnstileToken(token)}
+                    onExpire={() => setTurnstileToken(null)}
+                    onError={() => {
+                      setTurnstileToken(null)
+                      setStatus('error')
+                      setErrorMessage('Verification failed. Please refresh and try again.')
+                    }}
+                    theme="dark"
+                  />
+                </div>
+              )}
 
               {/* Status Messages */}
               {status === 'success' && (

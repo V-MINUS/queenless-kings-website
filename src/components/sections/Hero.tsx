@@ -27,7 +27,7 @@ export default function Hero() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/media/queenlesskingsmusic_1730567943_3492577245182398355_19327151472.mp4" type="video/mp4" />
+          <source src="/media/hero-background-compressed.mp4" type="video/mp4" />
         </video>
         
         {/* Dark overlay for readability */}
