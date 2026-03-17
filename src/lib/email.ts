@@ -33,7 +33,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<boolean> 
       return false
     }
     
-    const fromEmail = process.env.EMAIL_FROM || 'Queenless Kings <onboarding@resend.dev>'
+    const fromEmail = process.env.EMAIL_FROM || 'Queenless Kings <noreply@queenlesskingsband.com>'
     const toEmail = process.env.EMAIL_TO || 'bookings@queenlesskingsband.com'
 
     console.log('Attempting to send email from:', fromEmail, 'to:', toEmail)
