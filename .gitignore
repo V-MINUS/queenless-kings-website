@@ -44,6 +44,9 @@ yarn-error.log*
 setup-redis-homelab.sh
 .env.sample
 REDIS_HOMELAB_SETUP.md
+VERCEL_ENV_VARS.txt
+EMAIL_TROUBLESHOOTING.md
+VERCEL_DEPLOYMENT_GUIDE.md
 
 # vercel
 .vercel

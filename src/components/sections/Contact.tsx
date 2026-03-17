@@ -47,7 +47,7 @@ export default function Contact() {
   const [errorMessage, setErrorMessage] = useState('')
   const [honeypot, setHoneypot] = useState('')
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
-  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
