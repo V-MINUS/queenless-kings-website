@@ -23,20 +23,29 @@ export interface CalendarEvent {
 function getAuth() {
   const credentials = process.env.GOOGLE_SERVICE_ACCOUNT_KEY
   if (!credentials) {
-    throw new Error('Google service account credentials not configured')
+    // Return null during build time when credentials aren't available
+    return null
   }
 
-  const parsedCredentials = JSON.parse(credentials)
-  
-  return new google.auth.GoogleAuth({
-    credentials: parsedCredentials,
-    scopes: ['https://www.googleapis.com/auth/calendar.readonly'],
-  })
+  try {
+    const parsedCredentials = JSON.parse(credentials)
+    
+    return new google.auth.GoogleAuth({
+      credentials: parsedCredentials,
+      scopes: ['https://www.googleapis.com/auth/calendar.readonly'],
+    })
+  } catch (error) {
+    console.error('Failed to parse Google credentials:', error)
+    return null
+  }
 }
 
 // Get Calendar client
 function getCalendarClient() {
   const auth = getAuth()
+  if (!auth) {
+    return null
+  }
   return google.calendar({ version: 'v3', auth })
 }
 
@@ -44,8 +53,12 @@ function getCalendarClient() {
 export async function getUpcomingEvents(maxResults = 10): Promise<CalendarEvent[]> {
   try {
     const calendar = getCalendarClient()
+    if (!calendar) {
+      console.warn('Google Calendar credentials not configured')
+      return []
+    }
+    
     const calendarId = process.env.GOOGLE_CALENDAR_ID
-
     if (!calendarId) {
       console.warn('No Google Calendar ID configured')
       return []
@@ -85,8 +98,12 @@ export async function getEventsInRange(
 ): Promise<CalendarEvent[]> {
   try {
     const calendar = getCalendarClient()
+    if (!calendar) {
+      console.warn('Google Calendar credentials not configured')
+      return []
+    }
+    
     const calendarId = process.env.GOOGLE_CALENDAR_ID
-
     if (!calendarId) return []
 
     const response = await calendar.events.list({
@@ -118,8 +135,12 @@ export async function getEventsInRange(
 export async function getEventById(eventId: string): Promise<CalendarEvent | null> {
   try {
     const calendar = getCalendarClient()
+    if (!calendar) {
+      console.warn('Google Calendar credentials not configured')
+      return null
+    }
+    
     const calendarId = process.env.GOOGLE_CALENDAR_ID
-
     if (!calendarId) return null
 
     const response = await calendar.events.get({
