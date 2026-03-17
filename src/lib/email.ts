@@ -29,13 +29,16 @@ export async function sendContactEmail(data: ContactFormData): Promise<boolean> 
   try {
     const resend = getResend()
     if (!resend) {
+      console.error('Email sending failed: RESEND_API_KEY not configured')
       return false
     }
     
-    const fromEmail = process.env.EMAIL_FROM || 'Queen Less Kings <noreply@queenlesskings.com>'
+    const fromEmail = process.env.EMAIL_FROM || 'Queenless Kings <onboarding@resend.dev>'
     const toEmail = process.env.EMAIL_TO || 'bookings@queenlesskingsband.com'
 
-    await resend.emails.send({
+    console.log('Attempting to send email from:', fromEmail, 'to:', toEmail)
+
+    const result = await resend.emails.send({
       from: fromEmail,
       to: toEmail,
       replyTo: data.email,
@@ -43,11 +46,13 @@ export async function sendContactEmail(data: ContactFormData): Promise<boolean> 
       html: generateContactEmailHTML(data),
     })
 
+    console.log('Email send result:', result)
+
     // Send confirmation to the user
     await resend.emails.send({
       from: fromEmail,
       to: data.email,
-      subject: 'Thanks for reaching out! - Queen Less Kings',
+      subject: 'Thanks for reaching out! - Queenless Kings',
       html: generateContactConfirmationHTML(data.name),
     })
 
