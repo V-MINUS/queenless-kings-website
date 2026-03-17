@@ -42,6 +42,8 @@ yarn-error.log*
 *.json.secret
 *-credentials.json
 setup-redis-homelab.sh
+.env.sample
+REDIS_HOMELAB_SETUP.md
 
 # vercel
 .vercel
