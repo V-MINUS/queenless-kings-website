@@ -34,6 +34,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<boolean> 
     }
     
     const fromEmail = process.env.EMAIL_FROM || 'Queenless Kings <noreply@queenlesskingsband.com>'
+    // NOTE: Verified domain in Resend is queenlesskingsband.com (NOT queenlesskings.com)
     const toEmail = process.env.EMAIL_TO || 'bookings@queenlesskingsband.com'
 
     console.log('Attempting to send email from:', fromEmail, 'to:', toEmail)
@@ -48,12 +49,18 @@ export async function sendContactEmail(data: ContactFormData): Promise<boolean> 
 
     console.log('Email send result:', result)
 
-    // Send confirmation to the user
-    await resend.emails.send({
+    // Send confirmation to the user using Resend template
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (resend.emails.send as any)({
       from: fromEmail,
       to: data.email,
       subject: 'Thanks for reaching out! - Queenless Kings',
-      html: generateContactConfirmationHTML(data.name),
+      template: {
+        id: '2ac51431-60f8-4faa-922d-a1da6864e227',
+        variables: {
+          name: data.name,
+        },
+      },
     })
 
     return true
