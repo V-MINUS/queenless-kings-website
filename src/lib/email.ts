@@ -54,6 +54,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<boolean> 
     await (resend.emails.send as any)({
       from: fromEmail,
       to: data.email,
+      replyTo: process.env.EMAIL_TO || 'bookings@queenlesskingsband.com',
       subject: 'Thanks for reaching out! - Queenless Kings',
       template: {
         id: '2ac51431-60f8-4faa-922d-a1da6864e227',
