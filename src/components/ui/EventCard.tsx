@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Calendar, MapPin, Clock, Ticket, ExternalLink } from 'lucide-react'
 import Image from 'next/image'
+import { useState, useEffect } from 'react'
 
 interface EventCardProps {
   event: {
@@ -26,9 +27,16 @@ interface EventCardProps {
 
 export function EventCard({ event, index = 0, variant = 'default' }: EventCardProps) {
   const eventDate = new Date(event.date)
-  const isPast = eventDate < new Date()
+  const [isPast, setIsPast] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setIsPast(eventDate < new Date())
+    setMounted(true)
+  }, [event.date])
 
   const formatDate = (date: Date) => {
+    if (!mounted) return ''
     return date.toLocaleDateString('en-GB', {
       weekday: 'short',
       day: 'numeric',
@@ -38,10 +46,16 @@ export function EventCard({ event, index = 0, variant = 'default' }: EventCardPr
   }
 
   const formatTime = (date: Date) => {
+    if (!mounted) return ''
     return date.toLocaleTimeString('en-GB', {
       hour: '2-digit',
       minute: '2-digit',
     })
+  }
+
+  const formatMonth = (date: Date) => {
+    if (!mounted) return ''
+    return date.toLocaleDateString('en-GB', { month: 'short' })
   }
 
   if (variant === 'compact') {
@@ -59,7 +73,7 @@ export function EventCard({ event, index = 0, variant = 'default' }: EventCardPr
         <div className="flex-shrink-0 w-16 h-16 flex flex-col items-center justify-center bg-dark-700 rounded-lg">
           <span className="text-2xl font-bold text-neon-green">{eventDate.getDate()}</span>
           <span className="text-xs uppercase text-gray-400">
-            {eventDate.toLocaleDateString('en-GB', { month: 'short' })}
+            {formatMonth(eventDate)}
           </span>
         </div>
 
@@ -187,7 +201,7 @@ export function EventCard({ event, index = 0, variant = 'default' }: EventCardPr
           <div className="flex-shrink-0 w-20 h-20 flex flex-col items-center justify-center bg-dark-700 rounded-xl group-hover:bg-neon-green/10 transition-colors">
             <span className="text-3xl font-bold text-neon-green">{eventDate.getDate()}</span>
             <span className="text-sm uppercase text-gray-400">
-              {eventDate.toLocaleDateString('en-GB', { month: 'short' })}
+              {formatMonth(eventDate)}
             </span>
           </div>
 
