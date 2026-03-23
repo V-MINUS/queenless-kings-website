@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Instagram, Youtube, Music, Facebook, Mail, MapPin, Video } from 'lucide-react'
+import { useState } from 'react'
 
 const socialLinks = [
   { name: 'Instagram', href: 'https://www.instagram.com/queenlesskingsmusic/', icon: Instagram },
@@ -21,6 +22,35 @@ const quickLinks = [
 ]
 
 export default function Footer() {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [message, setMessage] = useState('')
+
+  async function handleSubscribe(e: React.FormEvent) {
+    e.preventDefault()
+    if (!email) return
+    setStatus('loading')
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setStatus('success')
+        setMessage('You\'re on the list! 🤘')
+        setEmail('')
+      } else {
+        setStatus('error')
+        setMessage(data.error || 'Something went wrong. Try again.')
+      }
+    } catch {
+      setStatus('error')
+      setMessage('Something went wrong. Try again.')
+    }
+  }
+
   return (
     <footer className="relative bg-black border-t border-brand-crimson/20 overflow-hidden">
       {/* Background pattern */}
@@ -70,20 +100,33 @@ export default function Footer() {
               </p>
               
               {/* Newsletter Signup */}
-              <div className="flex flex-col sm:flex-row gap-3 max-w-md">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-2 bg-brand-charcoal border border-brand-crimson/30 rounded-lg text-brand-cream placeholder-brand-cream/40 focus:outline-none focus:border-brand-crimson transition-colors duration-200"
-                />
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-6 py-2 bg-brand-crimson text-white font-semibold rounded-lg hover:shadow-glow-crimson transition-all duration-200 uppercase tracking-wider text-sm"
-                >
-                  Subscribe
-                </motion.button>
-              </div>
+              <form onSubmit={handleSubscribe} className="flex flex-col gap-3 max-w-md">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    required
+                    disabled={status === 'loading' || status === 'success'}
+                    className="flex-1 px-4 py-2 bg-brand-charcoal border border-brand-crimson/30 rounded-lg text-brand-cream placeholder-brand-cream/40 focus:outline-none focus:border-brand-crimson transition-colors duration-200 disabled:opacity-50"
+                  />
+                  <motion.button
+                    type="submit"
+                    disabled={status === 'loading' || status === 'success'}
+                    whileHover={{ scale: status === 'loading' || status === 'success' ? 1 : 1.05 }}
+                    whileTap={{ scale: status === 'loading' || status === 'success' ? 1 : 0.95 }}
+                    className="px-6 py-2 bg-brand-crimson text-white font-semibold rounded-lg hover:shadow-glow-crimson transition-all duration-200 uppercase tracking-wider text-sm disabled:opacity-50"
+                  >
+                    {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+                  </motion.button>
+                </div>
+                {message && (
+                  <p className={`text-sm ${status === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                    {message}
+                  </p>
+                )}
+              </form>
             </motion.div>
           </div>
 

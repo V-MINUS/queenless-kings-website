@@ -3,6 +3,7 @@
 import type { CalendarEvent } from '@/lib/google-calendar'
 import { motion } from 'framer-motion'
 import { Calendar, MapPin, Ticket } from 'lucide-react'
+import { useState } from 'react'
 
 interface EventsClientProps {
   events: CalendarEvent[]
@@ -21,7 +22,40 @@ const formatTime = (value: string) =>
     minute: '2-digit',
   })
 
+function stripUrls(text: string): string {
+  return text.replace(/https?:\/\/\S+/g, '').trim()
+}
+
 export default function EventsClient({ events }: EventsClientProps) {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [message, setMessage] = useState('')
+
+  async function handleSubscribe(e: React.FormEvent) {
+    e.preventDefault()
+    if (!email) return
+    setStatus('loading')
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setStatus('success')
+        setMessage('You\'re on the list! 🤘')
+        setEmail('')
+      } else {
+        setStatus('error')
+        setMessage(data.error || 'Something went wrong. Try again.')
+      }
+    } catch {
+      setStatus('error')
+      setMessage('Something went wrong. Try again.')
+    }
+  }
+
   return (
     <section id="events" className="relative py-20 bg-black overflow-hidden">
       {/* Background */}
@@ -100,9 +134,9 @@ export default function EventsClient({ events }: EventsClientProps) {
                       </div>
                     </div>
 
-                    {event.description && (
+                    {event.description && stripUrls(event.description) && (
                       <p className="mt-4 text-brand-cream/60 text-sm leading-relaxed max-w-3xl">
-                        {event.description}
+                        {stripUrls(event.description)}
                       </p>
                     )}
                   </div>
@@ -158,20 +192,33 @@ export default function EventsClient({ events }: EventsClientProps) {
             exclusive presales, and special events.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 bg-brand-charcoal border border-brand-crimson/30 rounded-lg text-brand-cream placeholder-brand-cream/40 focus:outline-none focus:border-brand-crimson transition-colors duration-200"
-            />
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 bg-brand-crimson text-white font-semibold rounded-lg hover:shadow-glow-crimson transition-all duration-200 uppercase tracking-wider text-sm"
-            >
-              Subscribe
-            </motion.button>
-          </div>
+          <form onSubmit={handleSubscribe} className="flex flex-col gap-3 max-w-md mx-auto">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                disabled={status === 'loading' || status === 'success'}
+                className="flex-1 px-4 py-3 bg-brand-charcoal border border-brand-crimson/30 rounded-lg text-brand-cream placeholder-brand-cream/40 focus:outline-none focus:border-brand-crimson transition-colors duration-200 disabled:opacity-50"
+              />
+              <motion.button
+                type="submit"
+                disabled={status === 'loading' || status === 'success'}
+                whileHover={{ scale: status === 'loading' || status === 'success' ? 1 : 1.05 }}
+                whileTap={{ scale: status === 'loading' || status === 'success' ? 1 : 0.95 }}
+                className="px-6 py-3 bg-brand-crimson text-white font-semibold rounded-lg hover:shadow-glow-crimson transition-all duration-200 uppercase tracking-wider text-sm disabled:opacity-50"
+              >
+                {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+              </motion.button>
+            </div>
+            {message && (
+              <p className={`text-sm text-center ${status === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                {message}
+              </p>
+            )}
+          </form>
         </motion.div>
       </div>
     </section>
