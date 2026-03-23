@@ -11,7 +11,7 @@ const releases = [
     title: 'Forgive Me Brother',
     type: 'Single',
     year: '2025',
-    cover: '/media/forgive-me-brother.png',
+    cover: '/media/forgive-me-brother.jpg',
     duration: '3:30',
     spotifyUrl: 'https://distrokid.com/hyperfollow/queenlesskings/forgive-me-brother',
     spotifyTrackId: '1V71KHAlWVWCJEBNHD9xE9',
