@@ -8,9 +8,22 @@ import { JsonLd, getMusicRecordingSchema } from '@/lib/structured-data'
 const releases = [
   {
     id: 1,
+    title: 'Forgive Me Brother',
+    type: 'Single',
+    year: '2025',
+    cover: '/media/forgive-me-brother.png',
+    duration: '3:30',
+    spotifyUrl: 'https://distrokid.com/hyperfollow/queenlesskings/forgive-me-brother',
+    spotifyTrackId: '1V71KHAlWVWCJEBNHD9xE9',
+    presaveUrl: 'https://distrokid.com/hyperfollow/queenlesskings/forgive-me-brother',
+    bandcampUrl: 'https://queenlesskings.bandcamp.com/',
+    youtubeUrl: 'https://www.youtube.com/@queenlesskings8794',
+  },
+  {
+    id: 2,
     title: "When You're On My Mind",
     type: 'Single',
-    year: '2024',
+    year: '2025',
     cover: '/media/when-your-on-my-mind.png',
     duration: '3:45',
     spotifyUrl: 'https://open.spotify.com/track/0w6BpESd8qQ4h69bhr0ICp',
@@ -19,10 +32,10 @@ const releases = [
     youtubeUrl: 'https://www.youtube.com/@queenlesskings8794',
   },
   {
-    id: 2,
+    id: 3,
     title: 'Killing Floor',
     type: 'Single',
-    year: '2024',
+    year: '2025',
     cover: '/media/killing-floor-single.png',
     duration: '4:12',
     spotifyUrl: 'https://open.spotify.com/track/4cg08bbvli0iYH6Eq9Uzpi',
@@ -77,7 +90,7 @@ export default function Music() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {releases.map((release, index) => (
             <motion.div
               key={release.id}
@@ -145,13 +158,29 @@ export default function Music() {
                     </motion.a>
                   </div>
                   
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-4 py-2 text-sm bg-brand-crimson text-white font-semibold rounded-lg hover:shadow-glow-crimson transition-all duration-200"
-                  >
-                    Listen Now
-                  </motion.button>
+                  {'presaveUrl' in release && release.presaveUrl ? (
+                    <motion.a
+                      href={release.presaveUrl as string}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="px-4 py-2 text-sm bg-brand-crimson text-white font-semibold rounded-lg hover:shadow-glow-crimson transition-all duration-200"
+                    >
+                      Pre-Save
+                    </motion.a>
+                  ) : (
+                    <motion.a
+                      href={release.spotifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="px-4 py-2 text-sm bg-brand-crimson text-white font-semibold rounded-lg hover:shadow-glow-crimson transition-all duration-200"
+                    >
+                      Listen Now
+                    </motion.a>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -159,7 +188,7 @@ export default function Music() {
         </div>
 
         {/* Spotify Embeds - One per release */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {releases.map((release, index) => (
             <motion.div
               key={`embed-${release.id}`}
