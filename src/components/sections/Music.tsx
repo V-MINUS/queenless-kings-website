@@ -11,9 +11,10 @@ const releases = [
     title: "When You're On My Mind",
     type: 'Single',
     year: '2024',
-    cover: '/media/queenlesskingsmusic_1732721683_3510646387546488337_19327151472.jpg',
+    cover: '/media/when-your-on-my-mind.png',
     duration: '3:45',
-    spotifyUrl: 'https://open.spotify.com/album/03OpQZiz2UuPY1yvcOTGBr',
+    spotifyUrl: 'https://open.spotify.com/track/0w6BpESd8qQ4h69bhr0ICp',
+    spotifyTrackId: '0w6BpESd8qQ4h69bhr0ICp',
     bandcampUrl: 'https://queenlesskings.bandcamp.com/',
     youtubeUrl: 'https://www.youtube.com/@queenlesskings8794',
   },
@@ -22,9 +23,10 @@ const releases = [
     title: 'Killing Floor',
     type: 'Single',
     year: '2024',
-    cover: '/media/queenlesskingsmusic_1730371247_3490929502043005438_19327151472.jpg',
+    cover: '/media/killing-floor-single.png',
     duration: '4:12',
-    spotifyUrl: 'https://open.spotify.com/album/0MBDBT5sOOs0mMdHE7BckA',
+    spotifyUrl: 'https://open.spotify.com/track/4cg08bbvli0iYH6Eq9Uzpi',
+    spotifyTrackId: '4cg08bbvli0iYH6Eq9Uzpi',
     bandcampUrl: 'https://queenlesskings.bandcamp.com/',
     youtubeUrl: 'https://www.youtube.com/@queenlesskings8794',
   },
@@ -156,29 +158,33 @@ export default function Music() {
           ))}
         </div>
 
-        {/* Spotify Embed - Latest Single */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="mt-16 max-w-2xl mx-auto"
-        >
-          <h3 className="text-lg font-semibold text-brand-cream/60 mb-6 uppercase tracking-wider text-center">Listen Now</h3>
-          <div className="rounded-xl overflow-hidden border border-brand-crimson/30">
-            <iframe 
-              style={{ borderRadius: '12px' }}
-              src="https://open.spotify.com/embed/album/03OpQZiz2UuPY1yvcOTGBr?utm_source=generator&theme=0"
-              width="100%" 
-              height="352" 
-              frameBorder="0" 
-              allowFullScreen
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-              loading="lazy"
-              title="When You're On My Mind - Queenless Kings on Spotify"
-            />
-          </div>
-        </motion.div>
+        {/* Spotify Embeds - One per release */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {releases.map((release, index) => (
+            <motion.div
+              key={`embed-${release.id}`}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: index * 0.15 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-sm font-semibold text-brand-cream/60 mb-3 uppercase tracking-wider text-center">{release.title}</h3>
+              <div className="rounded-xl overflow-hidden border border-brand-crimson/30">
+                <iframe
+                  style={{ borderRadius: '12px' }}
+                  src={`https://open.spotify.com/embed/track/${release.spotifyTrackId}?utm_source=generator&theme=0`}
+                  width="100%"
+                  height="152"
+                  frameBorder="0"
+                  allowFullScreen
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                  title={`${release.title} - Queenless Kings on Spotify`}
+                />
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
         {/* Streaming Platforms */}
         <motion.div
