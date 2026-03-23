@@ -187,7 +187,7 @@ function generateContactConfirmationHTML(name: string): string {
           In the meantime, check out our latest music and upcoming shows!
         </p>
         
-        <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://queenlesskings.com'}" 
+        <a href="https://queenlesskingsband.com" 
            style="display: inline-block; background: linear-gradient(135deg, #39FF14, #00FFFF); color: #000; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
           Visit Our Website
         </a>
@@ -232,17 +232,17 @@ function generateNewsletterWelcomeHTML(name?: string): string {
           <li style="margin-bottom: 8px;">🎉 <strong>Special Offers</strong> - Subscriber-only deals</li>
         </ul>
         
-        <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://queenlesskings.com'}" 
+        <a href="https://open.spotify.com/artist/11SfEIcAyAMs9UdphqUF82" 
            style="display: inline-block; background: linear-gradient(135deg, #39FF14, #00FFFF); color: #000; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
-          Explore Our Music
+          Listen on Spotify
         </a>
         
         <hr style="border: none; border-top: 1px solid #333; margin: 32px 0;">
         
         <div style="display: flex; gap: 16px; margin-bottom: 16px;">
-          <a href="${process.env.NEXT_PUBLIC_SPOTIFY || '#'}" style="color: #1DB954; text-decoration: none;">Spotify</a>
-          <a href="${process.env.NEXT_PUBLIC_INSTAGRAM || '#'}" style="color: #E4405F; text-decoration: none;">Instagram</a>
-          <a href="${process.env.NEXT_PUBLIC_YOUTUBE || '#'}" style="color: #FF0000; text-decoration: none;">YouTube</a>
+          <a href="https://open.spotify.com/artist/11SfEIcAyAMs9UdphqUF82" style="color: #1DB954; text-decoration: none;">Spotify</a>
+          <a href="https://www.instagram.com/queenlesskingsmusic/" style="color: #E4405F; text-decoration: none;">Instagram</a>
+          <a href="https://www.youtube.com/@queenlesskings8794" style="color: #FF0000; text-decoration: none;">YouTube</a>
         </div>
         
         <p style="color: #666; font-size: 12px; margin: 0;">
