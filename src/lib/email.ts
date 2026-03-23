@@ -71,7 +71,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<boolean> 
   }
 }
 
-// Send newsletter welcome email
+// Send newsletter welcome email and add to Resend Audience
 export async function sendNewsletterWelcome(data: NewsletterData): Promise<boolean> {
   try {
     const resend = getResend()
@@ -81,11 +81,27 @@ export async function sendNewsletterWelcome(data: NewsletterData): Promise<boole
     }
     
     const fromEmail = process.env.EMAIL_FROM || 'Queenless Kings <noreply@queenlesskingsband.com>'
+    const audienceId = process.env.RESEND_AUDIENCE_ID
 
+    // Add contact to Resend Audience for future broadcasts
+    if (audienceId) {
+      const nameParts = data.name?.trim().split(' ') ?? []
+      await resend.contacts.create({
+        audienceId,
+        email: data.email,
+        firstName: nameParts[0] ?? '',
+        lastName: nameParts.slice(1).join(' ') ?? '',
+        unsubscribed: false,
+      })
+    } else {
+      console.warn('RESEND_AUDIENCE_ID not set — subscriber not added to audience')
+    }
+
+    // Send welcome email
     await resend.emails.send({
       from: fromEmail,
       to: data.email,
-      subject: 'Welcome to the Kingdom! 👑 - Queen Less Kings',
+      subject: 'Welcome to the Kingdom! 👑 - Queenless Kings',
       html: generateNewsletterWelcomeHTML(data.name),
     })
 
