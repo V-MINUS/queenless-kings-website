@@ -80,7 +80,7 @@ export async function sendNewsletterWelcome(data: NewsletterData): Promise<boole
       return true // Return true in dev mode without API key
     }
     
-    const fromEmail = process.env.EMAIL_FROM || 'Queen Less Kings <noreply@queenlesskings.com>'
+    const fromEmail = process.env.EMAIL_FROM || 'Queenless Kings <noreply@queenlesskingsband.com>'
 
     await resend.emails.send({
       from: fromEmail,
