@@ -9,7 +9,7 @@ const releases = [
     id: 1,
     title: 'Forgive Me Brother',
     type: 'Single',
-    year: '2025',
+    year: '2026',
     cover: '/media/forgive-me-brother.jpg',
     duration: '3:30',
     spotifyUrl: 'https://distrokid.com/hyperfollow/queenlesskings/forgive-me-brother',
@@ -22,7 +22,7 @@ const releases = [
     id: 2,
     title: "When You're On My Mind",
     type: 'Single',
-    year: '2025',
+    year: '2024',
     cover: '/media/when-your-on-my-mind.png',
     duration: '3:45',
     spotifyUrl: 'https://open.spotify.com/track/0w6BpESd8qQ4h69bhr0ICp',
@@ -34,7 +34,7 @@ const releases = [
     id: 3,
     title: 'Killing Floor',
     type: 'Single',
-    year: '2025',
+    year: '2023',
     cover: '/media/killing-floor-single.png',
     duration: '4:12',
     spotifyUrl: 'https://open.spotify.com/track/4cg08bbvli0iYH6Eq9Uzpi',
@@ -102,20 +102,35 @@ export default function Music() {
                 />
               </div>
 
-              {/* Spotify Embed */}
-              <div className="px-4 pt-4">
-                <iframe
-                  style={{ borderRadius: '8px' }}
-                  src={`https://open.spotify.com/embed/track/${release.spotifyTrackId}?utm_source=generator&theme=0`}
-                  width="100%"
-                  height="80"
-                  frameBorder="0"
-                  allowFullScreen
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                  loading="lazy"
-                  title={`${release.title} - Queenless Kings on Spotify`}
-                />
-              </div>
+              {/* Spotify Embed or Pre-Save */}
+              {'presaveUrl' in release && release.presaveUrl ? (
+                <div className="px-4 pt-4">
+                  <motion.a
+                    href={release.presaveUrl as string}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex items-center justify-center w-full py-3 bg-brand-crimson text-white font-semibold rounded-lg hover:shadow-glow-crimson transition-all duration-200 text-sm"
+                  >
+                    Pre-Save on Spotify
+                  </motion.a>
+                </div>
+              ) : (
+                <div className="px-4 pt-4">
+                  <iframe
+                    style={{ borderRadius: '8px' }}
+                    src={`https://open.spotify.com/embed/track/${release.spotifyTrackId}?utm_source=generator&theme=0`}
+                    width="100%"
+                    height="80"
+                    frameBorder="0"
+                    allowFullScreen
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"
+                    title={`${release.title} - Queenless Kings on Spotify`}
+                  />
+                </div>
+              )}
 
               {/* Content */}
               <div className="p-4">
