@@ -1,8 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Play, Pause, ExternalLink, Download } from 'lucide-react'
-import { useState } from 'react'
+import { ExternalLink, Download } from 'lucide-react'
 import { JsonLd, getMusicRecordingSchema } from '@/lib/structured-data'
 
 const releases = [
@@ -46,12 +45,6 @@ const releases = [
 ]
 
 export default function Music() {
-  const [playingId, setPlayingId] = useState<number | null>(null)
-
-  const togglePlay = (id: number) => {
-    setPlayingId(playingId === id ? null : id)
-  }
-
   return (
     <section id="music" className="relative py-20 bg-brand-charcoal overflow-hidden">
       {/* Structured Data for Music Releases */}
@@ -98,118 +91,65 @@ export default function Music() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="group relative cyber-card rounded-xl overflow-hidden hover:border-brand-crimson/50 transition-all duration-300"
+              className="cyber-card rounded-xl overflow-hidden hover:border-brand-crimson/50 transition-all duration-300"
             >
               {/* Cover Art */}
-              <div className="relative aspect-square overflow-hidden">
-                <img 
-                  src={release.cover} 
+              <div className="aspect-square overflow-hidden">
+                <img
+                  src={release.cover}
                   alt={release.title}
                   className="w-full h-full object-cover"
                 />
-                
-                {/* Play Button Overlay */}
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => togglePlay(release.id)}
-                  className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                >
-                  <div className="w-16 h-16 bg-brand-crimson rounded-full flex items-center justify-center shadow-glow-crimson">
-                    {playingId === release.id ? (
-                      <Pause className="h-8 w-8 text-white" />
-                    ) : (
-                      <Play className="h-8 w-8 text-white ml-1" />
-                    )}
-                  </div>
-                </motion.button>
               </div>
 
-              {/* Content */}
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-brand-crimson font-semibold uppercase tracking-wider">{release.type}</span>
-                  <span className="text-sm text-brand-cream/60">{release.year}</span>
-                </div>
-                
-                <h3 className="text-xl font-bold text-brand-cream mb-2">{release.title}</h3>
-                <p className="text-brand-cream/60 text-sm mb-4">{release.duration}</p>
-
-                {/* Action Buttons */}
-                <div className="flex items-center justify-between">
-                  <div className="flex space-x-2">
-                    <motion.a
-                      href={release.spotifyUrl}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="p-2 bg-brand-charcoal rounded-lg text-brand-cream/60 hover:text-brand-crimson transition-all duration-200"
-                      aria-label="Listen on Spotify"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                    </motion.a>
-                    <motion.a
-                      href={release.bandcampUrl}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="p-2 bg-brand-charcoal rounded-lg text-brand-cream/60 hover:text-brand-crimson transition-all duration-200"
-                      aria-label="Buy on Bandcamp"
-                    >
-                      <Download className="h-4 w-4" />
-                    </motion.a>
-                  </div>
-                  
-                  {'presaveUrl' in release && release.presaveUrl ? (
-                    <motion.a
-                      href={release.presaveUrl as string}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="px-4 py-2 text-sm bg-brand-crimson text-white font-semibold rounded-lg hover:shadow-glow-crimson transition-all duration-200"
-                    >
-                      Pre-Save
-                    </motion.a>
-                  ) : (
-                    <motion.a
-                      href={release.spotifyUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="px-4 py-2 text-sm bg-brand-crimson text-white font-semibold rounded-lg hover:shadow-glow-crimson transition-all duration-200"
-                    >
-                      Listen Now
-                    </motion.a>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Spotify Embeds - One per release */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {releases.map((release, index) => (
-            <motion.div
-              key={`embed-${release.id}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.15 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-sm font-semibold text-brand-cream/60 mb-3 uppercase tracking-wider text-center">{release.title}</h3>
-              <div className="rounded-xl overflow-hidden border border-brand-crimson/30">
+              {/* Spotify Embed */}
+              <div className="px-4 pt-4">
                 <iframe
-                  style={{ borderRadius: '12px' }}
+                  style={{ borderRadius: '8px' }}
                   src={`https://open.spotify.com/embed/track/${release.spotifyTrackId}?utm_source=generator&theme=0`}
                   width="100%"
-                  height="152"
+                  height="80"
                   frameBorder="0"
                   allowFullScreen
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
                   title={`${release.title} - Queenless Kings on Spotify`}
                 />
+              </div>
+
+              {/* Content */}
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs text-brand-crimson font-semibold uppercase tracking-wider">{release.type}</span>
+                  <span className="text-xs text-brand-cream/60">{release.year}</span>
+                </div>
+                <h3 className="text-lg font-bold text-brand-cream mb-3">{release.title}</h3>
+
+                {/* Link Icons */}
+                <div className="flex space-x-2">
+                  <motion.a
+                    href={release.spotifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="p-2 bg-brand-charcoal rounded-lg text-brand-cream/60 hover:text-brand-crimson transition-all duration-200"
+                    aria-label="Listen on Spotify"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                  </motion.a>
+                  <motion.a
+                    href={release.bandcampUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="p-2 bg-brand-charcoal rounded-lg text-brand-cream/60 hover:text-brand-crimson transition-all duration-200"
+                    aria-label="Buy on Bandcamp"
+                  >
+                    <Download className="h-4 w-4" />
+                  </motion.a>
+                </div>
               </div>
             </motion.div>
           ))}
