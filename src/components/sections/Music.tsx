@@ -4,19 +4,20 @@ import { motion } from 'framer-motion'
 import { ExternalLink, Download } from 'lucide-react'
 import { JsonLd, getMusicRecordingSchema } from '@/lib/structured-data'
 
+const LYRIC_VIDEO_ID = 'QuJxMDbxfa0'
+
 const releases = [
   {
     id: 1,
     title: 'Forgive Me Brother',
     type: 'Single',
-    year: '2026',
+    year: '2025',
     cover: '/media/forgive-me-brother.jpg',
-    duration: '3:30',
-    spotifyUrl: 'https://distrokid.com/hyperfollow/queenlesskings/forgive-me-brother',
-    spotifyTrackId: '1V71KHAlWVWCJEBNHD9xE9',
-    presaveUrl: 'https://distrokid.com/hyperfollow/queenlesskings/forgive-me-brother',
+    duration: '3:20',
+    spotifyUrl: 'https://open.spotify.com/track/4RZVszD0dPplNRqkgYB6ux',
+    spotifyTrackId: '4RZVszD0dPplNRqkgYB6ux',
     bandcampUrl: 'https://queenlesskings.bandcamp.com/',
-    youtubeUrl: 'https://www.youtube.com/@queenlesskings8794',
+    youtubeUrl: 'https://www.youtube.com/watch?v=QuJxMDbxfa0',
   },
   {
     id: 2,
@@ -102,35 +103,20 @@ export default function Music() {
                 />
               </div>
 
-              {/* Spotify Embed or Pre-Save */}
-              {'presaveUrl' in release && release.presaveUrl ? (
-                <div className="px-4 pt-4">
-                  <motion.a
-                    href={release.presaveUrl as string}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="flex items-center justify-center w-full py-3 bg-brand-crimson text-white font-semibold rounded-lg hover:shadow-glow-crimson transition-all duration-200 text-sm"
-                  >
-                    Pre-Save on Spotify
-                  </motion.a>
-                </div>
-              ) : (
-                <div className="px-4 pt-4">
-                  <iframe
-                    style={{ borderRadius: '8px' }}
-                    src={`https://open.spotify.com/embed/track/${release.spotifyTrackId}?utm_source=generator&theme=0`}
-                    width="100%"
-                    height="80"
-                    frameBorder="0"
-                    allowFullScreen
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"
-                    title={`${release.title} - Queenless Kings on Spotify`}
-                  />
-                </div>
-              )}
+              {/* Spotify Embed */}
+              <div className="px-4 pt-4">
+                <iframe
+                  style={{ borderRadius: '8px' }}
+                  src={`https://open.spotify.com/embed/track/${release.spotifyTrackId}?utm_source=generator&theme=0`}
+                  width="100%"
+                  height="80"
+                  frameBorder="0"
+                  allowFullScreen
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                  title={`${release.title} - Queenless Kings on Spotify`}
+                />
+              </div>
 
               {/* Content */}
               <div className="p-4">
@@ -169,6 +155,31 @@ export default function Music() {
             </motion.div>
           ))}
         </div>
+
+        {/* Official Lyric Video */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="mt-16"
+        >
+          <h3 className="text-center text-lg font-semibold text-brand-cream/60 mb-6 uppercase tracking-wider">Official Lyric Video</h3>
+          <div className="relative max-w-4xl mx-auto rounded-xl overflow-hidden border border-brand-crimson/30 shadow-[0_0_40px_rgba(196,30,58,0.15)]">
+            <div className="aspect-video">
+              <iframe
+                src={`https://www.youtube.com/embed/${LYRIC_VIDEO_ID}?rel=0&modestbranding=1`}
+                title="Forgive Me Brother | Queenless Kings | Official Lyric Video"
+                width="100%"
+                height="100%"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
+          </div>
+        </motion.div>
 
         {/* Streaming Platforms */}
         <motion.div

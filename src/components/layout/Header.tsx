@@ -40,14 +40,23 @@ export default function Header() {
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-3">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="text-xl font-bold text-brand-cream uppercase tracking-wider"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="flex items-center space-x-3"
             >
-              Queenless Kings
+              <img
+                src="/qk-logo-web.png"
+                alt="Queenless Kings"
+                className="h-10 w-10 object-contain"
+              />
+              <span
+                className="text-xl font-bold text-brand-cream uppercase tracking-wider hidden sm:block"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                Queenless Kings
+              </span>
             </motion.div>
           </Link>
 

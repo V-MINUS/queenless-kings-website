@@ -150,27 +150,29 @@ export default function EventsClient({ events }: EventsClientProps) {
                       </div>
                     )}
                     
-                    <motion.a
-                      href={event.ticketUrl || event.htmlLink || '#'}
-                      target={event.ticketUrl || event.htmlLink ? '_blank' : undefined}
-                      rel={event.ticketUrl || event.htmlLink ? 'noopener noreferrer' : undefined}
-                      whileHover={{ scale: event.status === 'cancelled' ? 1 : 1.05 }}
-                      whileTap={{ scale: event.status === 'cancelled' ? 1 : 0.95 }}
-                      className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold uppercase tracking-wider text-sm transition-all duration-200 ${
-                        event.status === 'cancelled'
-                          ? 'bg-brand-charcoal text-brand-cream/40 cursor-not-allowed'
-                          : 'bg-brand-cream text-black hover:shadow-glow-gold'
-                      }`}
-                    >
-                      <Ticket className="h-4 w-4" />
-                      <span>
-                        {event.status === 'cancelled'
-                          ? 'Cancelled'
-                          : event.ticketUrl || event.htmlLink
-                            ? 'Get Tickets'
-                            : 'More Info'}
-                      </span>
-                    </motion.a>
+                    {event.status !== 'cancelled' && (event.ticketUrl || event.htmlLink) && (
+                      <motion.a
+                        href={event.ticketUrl || event.htmlLink || '#'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold uppercase tracking-wider text-sm transition-all duration-200 ${
+                          event.ticketUrl
+                            ? 'bg-brand-cream text-black hover:shadow-glow-gold'
+                            : 'bg-brand-charcoal border border-brand-crimson/40 text-brand-cream hover:border-brand-crimson'
+                        }`}
+                      >
+                        <Ticket className="h-4 w-4" />
+                        <span>{event.ticketUrl ? 'Get Tickets' : 'View Event'}</span>
+                      </motion.a>
+                    )}
+                    {event.status === 'cancelled' && (
+                      <div className="flex items-center space-x-2 px-6 py-3 rounded-lg font-semibold uppercase tracking-wider text-sm bg-brand-charcoal text-brand-cream/40">
+                        <Ticket className="h-4 w-4" />
+                        <span>Cancelled</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

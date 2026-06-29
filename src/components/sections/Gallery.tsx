@@ -2,9 +2,107 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { X, ChevronLeft, ChevronRight, Play } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const galleryItems = [
+  {
+    id: 101,
+    type: 'image',
+    src: '/media/gig-photo-01.jpg',
+    alt: 'Drummer behind the kit - live gig',
+    title: 'Live at DFM',
+  },
+  {
+    id: 102,
+    type: 'image',
+    src: '/media/gig-photo-02.jpg',
+    alt: 'Band member on stage - live gig',
+    title: 'Live at DFM',
+  },
+  {
+    id: 103,
+    type: 'image',
+    src: '/media/gig-photo-03.jpg',
+    alt: 'Guitarist playing live',
+    title: 'Live at DFM',
+  },
+  {
+    id: 104,
+    type: 'image',
+    src: '/media/gig-photo-04.jpg',
+    alt: 'Guitarist shredding on stage',
+    title: 'Live at DFM',
+  },
+  {
+    id: 105,
+    type: 'image',
+    src: '/media/gig-photo-05.jpg',
+    alt: 'Band member portrait - live',
+    title: 'Live at DFM',
+  },
+  {
+    id: 106,
+    type: 'image',
+    src: '/media/gig-photo-06.jpg',
+    alt: 'Band member on stage',
+    title: 'Live at DFM',
+  },
+  {
+    id: 107,
+    type: 'image',
+    src: '/media/gig-photo-07.jpg',
+    alt: 'Band member performing live',
+    title: 'Live at DFM',
+  },
+  {
+    id: 108,
+    type: 'image',
+    src: '/media/gig-photo-08.jpg',
+    alt: 'Band member on stage close-up',
+    title: 'Live at DFM',
+  },
+  {
+    id: 109,
+    type: 'image',
+    src: '/media/gig-photo-09.jpg',
+    alt: 'Band member performing',
+    title: 'Live at DFM',
+  },
+  {
+    id: 110,
+    type: 'image',
+    src: '/media/gig-photo-10.jpg',
+    alt: 'Singer performing live',
+    title: 'Live at DFM',
+  },
+  {
+    id: 111,
+    type: 'image',
+    src: '/media/gig-photo-11.jpg',
+    alt: 'Band member on stage',
+    title: 'Live at DFM',
+  },
+  {
+    id: 112,
+    type: 'image',
+    src: '/media/gig-photo-12.jpg',
+    alt: 'Singer belting it out live',
+    title: 'Live at DFM',
+  },
+  {
+    id: 113,
+    type: 'image',
+    src: '/media/gig-photo-13.jpg',
+    alt: 'Band member performing live',
+    title: 'Live at DFM',
+  },
+  {
+    id: 114,
+    type: 'image',
+    src: '/media/gig-photo-14.jpg',
+    alt: 'Band backstage fun',
+    title: 'Behind the Scenes',
+  },
   {
     id: 1,
     type: 'image',
@@ -61,39 +159,12 @@ const galleryItems = [
     alt: 'Piece of Cake album artwork',
     title: 'Piece of Cake - Artwork',
   },
-  {
-    id: 9,
-    type: 'video',
-    src: '/media/queenlesskingsmusic_piece_of_cake_promo.mp4',
-    thumbnail: '/media/queenlesskingsmusic_1732721683_3510646387546488337_19327151472.jpg',
-    alt: 'Piece of Cake promo video',
-    title: 'Piece of Cake - Promo',
-  },
-  {
-    id: 10,
-    type: 'video',
-    src: '/media/queenlesskingsmusic_ryan_jamming.mp4',
-    thumbnail: '/media/queenlesskingsmusic_1731090435_3496962489226622453_19327151472.webp',
-    alt: 'Ryan jamming session',
-    title: 'Jam Session',
-  },
-  {
-    id: 11,
-    type: 'video',
-    src: '/media/queenlesskingsmusic_1stephen.mp4',
-    thumbnail: '/media/queenlesskingsmusic_1731090435_3496962489134213247_19327151472.webp',
-    alt: 'Stephen performance',
-    title: 'Live Performance',
-  },
 ]
 
 export default function Gallery() {
   const [selectedItem, setSelectedItem] = useState<number | null>(null)
-  const [filter, setFilter] = useState<'all' | 'image' | 'video'>('all')
 
-  const filteredItems = galleryItems.filter(item => 
-    filter === 'all' || item.type === filter
-  )
+  const filteredItems = galleryItems
 
   const openLightbox = (id: number) => {
     setSelectedItem(id)
@@ -138,24 +209,6 @@ export default function Gallery() {
             Behind the scenes, live performances, and exclusive moments
           </p>
 
-          {/* Filter Buttons */}
-          <div className="flex justify-center space-x-4">
-            {['all', 'image', 'video'].map((filterType) => (
-              <motion.button
-                key={filterType}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setFilter(filterType as 'all' | 'image' | 'video')}
-                className={`px-6 py-2 rounded-lg font-semibold uppercase tracking-wider text-sm transition-all duration-200 ${
-                  filter === filterType
-                    ? 'bg-brand-crimson text-white'
-                    : 'cyber-card text-brand-cream hover:text-brand-crimson hover:border-brand-crimson/50'
-                }`}
-              >
-                {filterType.charAt(0).toUpperCase() + filterType.slice(1)}
-              </motion.button>
-            ))}
-          </div>
         </motion.div>
 
         {/* Gallery Grid with actual images */}
@@ -187,11 +240,7 @@ export default function Gallery() {
 
               {/* Hover content */}
               <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                {item.type === 'video' ? (
-                  <Play className="h-12 w-12 text-brand-crimson drop-shadow-lg" />
-                ) : (
-                  <div className="text-brand-cream text-lg font-semibold uppercase tracking-wider drop-shadow-lg">View</div>
-                )}
+                <div className="text-brand-cream text-lg font-semibold uppercase tracking-wider drop-shadow-lg">View</div>
               </div>
 
               {/* Title on hover */}
@@ -199,12 +248,6 @@ export default function Gallery() {
                 <p className="text-sm text-brand-cream font-medium truncate">{item.title}</p>
               </div>
 
-              {/* Type indicator */}
-              {item.type === 'video' && (
-                <div className="absolute top-2 right-2 px-2 py-1 bg-brand-crimson rounded text-xs text-white font-semibold uppercase">
-                  Video
-                </div>
-              )}
             </motion.div>
           ))}
         </motion.div>
@@ -250,20 +293,11 @@ export default function Gallery() {
 
               {/* Content */}
               <div className="rounded-xl overflow-hidden border border-brand-crimson/30">
-                {selectedItemData.type === 'video' ? (
-                  <video
-                    src={selectedItemData.src}
-                    controls
-                    autoPlay
-                    className="w-full max-h-[70vh] object-contain bg-black"
-                  />
-                ) : (
-                  <img 
+                <img 
                     src={selectedItemData.src} 
                     alt={selectedItemData.alt}
                     className="w-full max-h-[70vh] object-contain bg-black"
                   />
-                )}
                 
                 <div className="p-4 bg-black/90">
                   <h3 className="text-lg font-bold text-brand-cream">{selectedItemData.title}</h3>

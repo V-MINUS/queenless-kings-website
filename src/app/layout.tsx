@@ -98,9 +98,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://api.spotify.com" />
         {/* Favicon */}
+        <link rel="icon" href="/qk-favicon.png" type="image/png" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="icon" href="/favicon.jpg" type="image/jpeg" />
-        <link rel="apple-touch-icon" href="/favicon.jpg" />
+        <link rel="apple-touch-icon" href="/qk-logo-web.png" />
         <link rel="manifest" href="/manifest.json" />
         {/* Structured Data */}
         <JsonLd data={getBandSchema()} />

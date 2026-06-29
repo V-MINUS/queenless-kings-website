@@ -121,18 +121,18 @@ export default function Hero() {
           className="mt-16"
         >
           <a
-            href="https://open.spotify.com/album/03OpQZiz2UuPY1yvcOTGBr"
+            href="https://open.spotify.com/track/4RZVszD0dPplNRqkgYB6ux"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-4 px-6 py-3 bg-black/50 backdrop-blur-sm border border-brand-crimson/30 rounded-full hover:border-brand-crimson/50 transition-colors"
           >
-            <div className="w-12 h-12 bg-gradient-to-br from-brand-crimson to-brand-darkred rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Play className="w-6 h-6 text-white" />
+            <div className="w-12 h-12 overflow-hidden rounded-lg group-hover:scale-110 transition-transform">
+              <img src="/media/forgive-me-brother.jpg" alt="Forgive Me Brother" className="w-full h-full object-cover" />
             </div>
             <div className="text-left">
               <p className="text-sm text-brand-cream/60">Latest Release</p>
               <p className="text-brand-cream font-semibold group-hover:text-brand-crimson transition-colors">
-                When You're On My Mind - Out Now
+                Forgive Me Brother — Out Now
               </p>
             </div>
           </a>

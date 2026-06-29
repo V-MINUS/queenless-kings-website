@@ -91,9 +91,12 @@ export default function Footer() {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xl font-bold text-brand-cream mb-4 uppercase tracking-wider" style={{ fontFamily: "'Playfair Display', serif" }}>
-                Queenless Kings
-              </h3>
+              <div className="flex items-center gap-4 mb-4">
+                <img src="/qk-logo-web.png" alt="Queenless Kings" className="h-14 w-14 object-contain" />
+                <h3 className="text-xl font-bold text-brand-cream uppercase tracking-wider" style={{ fontFamily: "'Playfair Display', serif" }}>
+                  Queenless Kings
+                </h3>
+              </div>
               <p className="text-brand-cream/70 mb-6 max-w-md">
                 Experience the sound that defines a generation. Follow us for the latest music, 
                 exclusive content, and upcoming events.
