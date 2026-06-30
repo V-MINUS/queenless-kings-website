@@ -39,7 +39,7 @@ const config: NextConfig = {
       "font-src 'self' data:",
       "connect-src 'self' https://challenges.cloudflare.com https://api.spotify.com https://i.scdn.co",
       "media-src 'self' https: blob:",
-      "frame-src 'self' https://challenges.cloudflare.com https://open.spotify.com",
+      "frame-src 'self' https://challenges.cloudflare.com https://open.spotify.com https://www.youtube.com",
       "object-src 'none'",
       "base-uri 'self'",
       "form-action 'self'",
