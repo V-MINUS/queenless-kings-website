@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { ExternalLink, Youtube } from 'lucide-react'
 import { JsonLd, getMusicRecordingSchema } from '@/lib/structured-data'
 
-const LYRIC_VIDEO_ID = 'QuJxMDbxfa0'
+const FEATURED_VIDEO_ID = 'HgSwKe5QR4E'
 
 const platforms = [
   { name: 'Spotify', href: 'https://open.spotify.com/artist/11SfEIcAyAMs9UdphqUF82' },
@@ -189,7 +189,7 @@ export default function Music() {
           </div>
         </motion.div>
 
-        {/* ── Official Lyric Video ── */}
+        {/* ── Featured Video ── */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -198,14 +198,14 @@ export default function Music() {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-6">
-            <span className="text-brand-cream/35 text-xs font-semibold uppercase tracking-[0.15em]">Official Lyric Video</span>
+            <span className="text-brand-cream/35 text-xs font-semibold uppercase tracking-[0.15em]">Live at Red Lake Studios</span>
             <div className="h-px flex-1 bg-white/5" />
           </div>
           <div className="relative max-w-4xl rounded-xl overflow-hidden border border-white/[0.06]">
             <div className="aspect-video">
               <iframe
-                src={`https://www.youtube.com/embed/${LYRIC_VIDEO_ID}?rel=0&modestbranding=1`}
-                title="Forgive Me Brother | Queenless Kings | Official Lyric Video"
+                src={`https://www.youtube.com/embed/${FEATURED_VIDEO_ID}?rel=0&modestbranding=1`}
+                title="Forgive Me Brother (Live at Red Lake Studios) | Queenless Kings"
                 width="100%"
                 height="100%"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

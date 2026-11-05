@@ -9,20 +9,22 @@ interface EventsClientProps {
   events: CalendarEvent[]
 }
 
+const TIME_ZONE = 'Europe/Dublin'
+
 function getDay(dateStr: string) {
-  return new Date(dateStr).getDate()
+  return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', timeZone: TIME_ZONE })
 }
 
 function getMonth(dateStr: string) {
-  return new Date(dateStr).toLocaleString('en-GB', { month: 'short' }).toUpperCase()
+  return new Date(dateStr).toLocaleString('en-GB', { month: 'short', timeZone: TIME_ZONE }).toUpperCase()
 }
 
 function getWeekday(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('en-GB', { weekday: 'long' })
+  return new Date(dateStr).toLocaleDateString('en-GB', { weekday: 'long', timeZone: TIME_ZONE })
 }
 
 function getTime(dateStr: string) {
-  return new Date(dateStr).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+  return new Date(dateStr).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: TIME_ZONE })
 }
 
 function stripUrls(text: string) {

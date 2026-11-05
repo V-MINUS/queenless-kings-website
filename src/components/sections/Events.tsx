@@ -6,7 +6,7 @@ export default async function Events() {
   let events: CalendarEvent[] = []
 
   try {
-    events = await getUpcomingEvents(6)
+    events = await getUpcomingEvents(10)
   } catch (error) {
     console.error('Failed to load events from Google Calendar', error)
   }

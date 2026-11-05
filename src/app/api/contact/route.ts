@@ -120,9 +120,16 @@ export async function POST(request: NextRequest) {
                'unknown'
 
     // Rate limiting: Upstash > Local Redis > In-memory fallback
-    if (ratelimit) {
+    const upstashResult = ratelimit
+      ? await ratelimit.limit(`contact:${ip}`).catch((error) => {
+          console.error('Upstash rate limit error, falling back to in-memory:', error)
+          return null
+        })
+      : null
+
+    if (upstashResult) {
       // Upstash REST API rate limiting
-      const { success, reset } = await ratelimit.limit(`contact:${ip}`)
+      const { success, reset } = upstashResult
       if (!success) {
         const retryAfter = Math.max(0, Math.ceil(reset - Date.now() / 1000))
         return NextResponse.json(
