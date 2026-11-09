@@ -160,6 +160,7 @@ export async function POST(request: NextRequest) {
     const validationResult = contactSchema.safeParse(body)
 
     if (!validationResult.success) {
+      console.warn('Contact validation failed:', Object.keys(validationResult.error.flatten().fieldErrors))
       return NextResponse.json(
         { 
           error: 'Validation failed', 
@@ -203,6 +204,7 @@ export async function POST(request: NextRequest) {
 
     const verifyData = await verifyResponse.json()
     if (!verifyData.success) {
+      console.warn('Turnstile verification failed:', verifyData['error-codes'], 'hostname:', verifyData.hostname)
       return NextResponse.json(
         { error: 'Verification failed. Please refresh and try again.' },
         { status: 400 }

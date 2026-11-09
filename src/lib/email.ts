@@ -48,6 +48,10 @@ export async function sendContactEmail(data: ContactFormData): Promise<boolean> 
     })
 
     console.log('Email send result:', result)
+    if (result.error) {
+      console.error('Resend rejected contact email:', result.error)
+      return false
+    }
 
     // Send confirmation to the user using Resend template
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -98,12 +102,16 @@ export async function sendNewsletterWelcome(data: NewsletterData): Promise<boole
     }
 
     // Send welcome email
-    await resend.emails.send({
+    const { error: sendError } = await resend.emails.send({
       from: fromEmail,
       to: data.email,
       subject: 'Welcome to the Kingdom! 👑 - Queenless Kings',
       html: generateNewsletterWelcomeHTML(data.name),
     })
+    if (sendError) {
+      console.error('Resend rejected newsletter welcome:', sendError)
+      return false
+    }
 
     return true
   } catch (error) {
