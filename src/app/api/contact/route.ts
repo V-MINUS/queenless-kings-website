@@ -47,7 +47,7 @@ const MAX_REQUESTS = 5
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(100),
   email: z.string().email('Invalid email address'),
-  subject: z.string().min(5, 'Subject must be at least 5 characters').max(200),
+  subject: z.string().min(2, 'Please select a subject').max(200),
   message: z.string().min(10, 'Message must be at least 10 characters').max(5000),
   honeypot: z.string().optional(),
   turnstileToken: z.string().min(10, 'Verification is required'),

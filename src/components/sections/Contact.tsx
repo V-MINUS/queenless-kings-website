@@ -81,7 +81,8 @@ export default function Contact() {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to send message')
+        const fieldErrors = data.details ? Object.values(data.details).flat() : []
+        throw new Error((fieldErrors[0] as string) || data.error || 'Failed to send message')
       }
 
       setStatus('success')
@@ -164,6 +165,7 @@ export default function Contact() {
                     id="name"
                     name="name"
                     required
+                    minLength={2}
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full px-4 py-3 bg-black border border-brand-crimson/30 rounded-lg text-brand-cream placeholder-brand-cream/40 focus:outline-none focus:border-brand-crimson transition-colors duration-200"
@@ -214,6 +216,7 @@ export default function Contact() {
                   Message *
                 </label>
                 <textarea
+                  minLength={10}
                   id="message"
                   name="message"
                   required
